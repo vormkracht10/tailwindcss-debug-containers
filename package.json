@@ -1,16 +1,16 @@
 {
-  "name": "tailwindcss-debug-screens",
+  "name": "tailwindcss-debug-containers",
   "version": "2.2.1",
-  "description": "A Tailwind CSS component that shows the currently active screen (responsive breakpoint).",
+  "description": "A Tailwind CSS component that shows the currently active container (responsive breakpoint).",
   "main": "index.js",
   "author": "Joren Van Hee",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jorenvanhee/tailwindcss-debug-screens.git"
+    "url": "https://github.com/jorenvanhee/tailwindcss-debug-containers.git"
   },
-  "homepage": "https://github.com/jorenvanhee/tailwindcss-debug-screens",
-  "bugs": "https://github.com/jorenvanhee/tailwindcss-debug-screens/issues",
+  "homepage": "https://github.com/jorenvanhee/tailwindcss-debug-containers",
+  "bugs": "https://github.com/jorenvanhee/tailwindcss-debug-containers/issues",
   "peerDependencies": {
     "tailwindcss": "^1.0 || ^2.0 || ^3.0.0-alpha.1 || ^3.0"
   }

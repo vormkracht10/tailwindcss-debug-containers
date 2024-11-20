@@ -1,42 +1,42 @@
 module.exports = function ({ addComponents, theme }) {
-  const screens = theme('screens');
-  const userStyles = theme('debugScreens.style', {});
-  const ignoredScreens = theme('debugScreens.ignore', ['dark']);
-  const prefix = theme('debugScreens.prefix', 'screen: ');
-  const selector = theme('debugScreens.selector', '.debug-screens');
-
-  const defaultPosition = ['bottom', 'left'];
-  const position = theme('debugScreens.position', defaultPosition);
-  const positionY = position[0] || defaultPosition[0];
-  const positionX = position[1] || defaultPosition[1];
+  const containers = theme('containers', {}); // Get container breakpoints from the Tailwind theme
+  const userStyles = theme('debugContainers.style', {}); // Allow user-defined styles
+  const prefix = theme('debugContainers.prefix', 'container: '); // Label prefix
+  const selector = theme('debugContainers.selector', '[class*="@container"]'); // Target elements with `@container`
 
   const components = {
-    [`${selector}::before`]: Object.assign({
-      position: 'fixed',
-      zIndex: '2147483647',
-      [positionY]: '0',
-      [positionX]: '0',
-      padding: '.3333333em .5em',
-      fontSize: '12px',
-      lineHeight: '1',
-      fontFamily: 'sans-serif',
-      backgroundColor: '#000',
-      color: '#fff',
-      boxShadow: '0 0 0 1px #fff',
-      content: `'${prefix}_'`,
-    }, userStyles),
+    // Make all `@container` elements `relative` for debug label positioning
+    [selector]: {
+      position: 'relative',
+    },
+    // Base styles for the debug label
+    [`${selector}::before`]: Object.assign(
+      {
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        padding: '.3333333em .5em',
+        fontSize: '12px',
+        lineHeight: '1',
+        fontFamily: 'sans-serif',
+        backgroundColor: '#000',
+        color: '#fff',
+        boxShadow: '0 0 0 1px #fff',
+        zIndex: '2147483647',
+        content: `'${prefix}_'`, // Placeholder content, updated via container queries
+      },
+      userStyles
+    ),
   };
 
-  Object.entries(screens)
-    .filter(([screen]) => !ignoredScreens.includes(screen))
-    .forEach(([screen]) => {
-      components[`@screen ${screen}`] = {
-        [`${selector}::before`]: {
-          content: `'${prefix}${screen}'`,
-        },
-      };
-    });
+  // Add container-specific rules using `@container`
+  Object.entries(containers).forEach(([container, size]) => {
+    components[`@container (min-width: ${size})`] = {
+      [`${selector}::before`]: {
+        content: `'${prefix}${container} (${size})'`, // Dynamic label for container
+      },
+    };
+  });
 
   addComponents(components);
-}
-
+};
